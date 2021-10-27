@@ -1,2 +1,2 @@
 # live-comment
-WIP NesoVR live Comment
+WIP NeosVR live Comment
