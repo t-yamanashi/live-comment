@@ -30,6 +30,7 @@ defmodule ServerWeb do
   def view do
     quote do
       use Phoenix.View,
+        pattern: "**/*",
         root: "lib/server_web/templates",
         namespace: ServerWeb
 

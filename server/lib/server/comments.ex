@@ -9,6 +9,24 @@ defmodule Server.Comments do
   alias Server.Comments.Comment
 
   @doc """
+  Get last comment
+  """
+  def get_last_comment! do
+    try do
+      ret =
+        from(comment in Comment, where: comment.loaded == 0, order_by: [:id])
+        |> Ecto.Query.first()
+        |> Repo.one!()
+
+      update_comment(ret, %{loaded: 1})
+      "#{ret.id},#{ret.comment}"
+    rescue
+      e in Ecto.NoResultsError ->
+        "-1,"
+    end
+  end
+
+  @doc """
   Returns the list of comments.
 
   ## Examples

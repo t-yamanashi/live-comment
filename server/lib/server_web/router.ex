@@ -14,6 +14,24 @@ defmodule ServerWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api/rest/", ServerWeb do
+    pipe_through :api
+
+    get "/*path_", RestApiController, :index
+    post "/*path_", RestApiController, :create
+    put "/*path_", RestApiController, :update
+    delete "/*path_", RestApiController, :delete
+  end
+
+  scope "/api/", ServerWeb do
+    pipe_through :api
+
+    get "/*path_", ApiController, :index
+    post "/*path_", ApiController, :index
+    put "/*path_", ApiController, :index
+    delete "/*path_", ApiController, :index
+  end
+
   scope "/", ServerWeb do
     pipe_through :browser
 
@@ -24,7 +42,8 @@ defmodule ServerWeb.Router do
     live "/comments/:id", CommentLive.Show, :show
     live "/comments/:id/show/edit", CommentLive.Show, :edit
 
-    get "/", PageController, :index
+    get "/*path_", PageController, :index
+    post "/*path_", PageController, :index
   end
 
   # Other scopes may use custom stacks.
